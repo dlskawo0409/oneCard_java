@@ -24,7 +24,7 @@ class Player{
 			System.out.print("모양 : " +  playerDeck.get(i).getShape()
 					+ ", 숫자 : " + playerDeck.get(i).getCardNum() + "\n");
 		}
-		System.out.print("낼 카드를 선택해주세요(낼 카드가 없으면 skip 0을 입력해주세요, skip 0 입력 시 뽑을 카드가 남아있는 경우 카드를 한장 가져옵니다.) : ");
+		System.out.print("낼 카드를 선택해주세요(낼 카드가 없으면 스킵 0을 입력해주세요, 스킵 0 입력 시 뽑을 카드가 남아있는 경우 카드를 한장 가져옵니다.) : ");
 		System.out.println();
 	}
 	
