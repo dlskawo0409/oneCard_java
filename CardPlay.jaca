@@ -1,0 +1,120 @@
+package test0901;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+public class CardPlay {
+	private ArrayList<Player> playerArr=new ArrayList<Player>();
+	private int playerNumber=-1;
+	private Player currentPlayer;
+	Deck deck =new Deck();
+	Field field = new Field();
+	
+	CardPlay(){
+		this(2);
+	}
+	
+	CardPlay(int playerCount){
+	for(int i=0;i<playerCount;i++) 
+	  playerArr.add(new Player());
+	nextTurn();
+	field.changeFieldCard(deck.drawOneCard());
+
+	}
+	
+	public void nextTurn() {
+		playerNumber++;
+		
+		if(playerNumber>=playerArr.size())
+			playerNumber=0;
+		
+		currentPlayer=playerArr.get(playerNumber);
+	}
+	
+	public void distributeCard() {
+		distributeCard(10);
+	}
+	
+	public void distributeCard(int cardCount) {
+		for(int i=0;i<playerArr.size();i++)
+			for(int j=0;j<cardCount;j++)
+				playerArr.get(i).addPlayerDeck(deck.drawOneCard());
+	}
+	
+	public void showTable() {
+		field.printFieldCard();
+		currentPlayer.printPlayerDeck();
+	}
+	
+	public boolean playerBehavior(String cardShape, int cardNum){
+		if(checkIsSkip(cardShape, cardNum)) {
+			return checkLeftDeckAndDraw();
+		}
+		else
+			return putCardToField(cardShape,cardNum);
+	}
+	
+	protected boolean checkIsSkip(String cardShape, int cardNum) {
+		if(cardShape.equals("스킵") || cardNum == 0)
+			return true;
+		else
+			return false;
+	}
+	
+	protected boolean checkLeftDeckAndDraw() {
+		if(deck.LeftCard()!=0)
+		{
+			currentPlayer.addPlayerDeck(deck.drawOneCard());
+			return true;
+		}
+		else
+		{
+			System.out.println("덱의 카드가 모두 소진되어 카드를 가져올 수 없습니다.");
+			return false;
+		}
+	}
+	protected boolean putCardToField(String cardShape, int cardNum) {
+		if(campareFieldAndInput(cardShape,cardNum))
+			try {
+				field.changeFieldCard(currentPlayer.putCard(cardShape, cardNum));
+				return true;
+			}catch(Exception e) {
+				System.out.println("패에 존재하지 않는 카드 입니다.");
+				return false;
+			}
+		else {
+			System.out.println("낼 수 없는 패입니다.");
+			return false;
+		}
+	}
+	
+	protected boolean campareFieldAndInput(String cardShape, int cardNum) {
+		if(cardShape.equals(field.getFieldCardShape())||cardNum==field.getFieldCardNum())
+			return true;
+		else
+			return false;
+	}
+	
+	public void checkWinnerAndEndGame() {
+		if(currentPlayer.getPlayerDeckSize()==0) {
+			System.out.printf("Player%d 승리!!",playerNumber+1);
+			endGame();
+		}
+	}
+	
+	public void endGame() {
+		System.out.println("게임을 종료합니다.");
+		System.exit(0);
+	}
+
+	
+}
+
+
+
+
+
+	
+	
+

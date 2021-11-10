@@ -1,4 +1,4 @@
-ipackage test0901;
+package test0901;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -42,11 +42,6 @@ public class Deck {
 	
 	public int LeftCard() {
 		return deck.size();
-	}
-	
-	public void LeftCards() {
-		for(int i= 0;i<deck.size();i++)
-			System.out.println(deck.get(i).getShape()+" "+deck.get(i).getCardNum());
 	}
 	
 }
